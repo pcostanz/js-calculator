@@ -1,0 +1,93 @@
+body, div, a {
+    padding:0;
+    margin:0;
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+a {
+	cursor: pointer;
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+
+	/* No support for these yet, use at own risk */
+	-o-user-select: none;
+	user-select: none;        
+}
+
+#calculator {
+	background-color: white;
+	width: 310px;
+	height: 460px;
+	margin: 10px auto;
+	padding: 5px;
+	border-radius: 10px;
+	box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.4);
+}
+
+#total {
+    height: 70px;
+    width: 300px;
+    margin:auto;
+    background-color:white;
+    margin-bottom: 5px;
+    text-align: right;
+    font-size: 60px;
+    padding: 0 5px;
+}
+
+#numbers, #operators {
+	margin: auto;	
+}
+
+#operators a {
+	display: block;
+	width: 45px;
+	height: 45px;
+	float: left;
+	text-decoration: none;
+	color: black;
+	text-align: center;
+	font-size: 39px;
+	padding: 2px;
+	margin: 5px 6px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(#DCDCDC));
+	background: -moz-linear-gradient(top, #EDEDED, #DCDCDC);
+	border-radius: 10px;
+}
+
+#numbers a {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	float: left;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+	font-size: 32pt;
+	padding: 10px;
+	margin: 5px 15px;
+	border-radius: 50% / 14%;
+	background: linear-gradient(to bottom, rgb(124,197,201) 0%,rgb(135,216,220) 100%);
+	border : 1px solid #64adaf;  
+	box-shadow: 
+    0px 6px 0px 0px rgba(100, 173, 175, 1),
+    0px 5px 12px 0px rgba(0, 0, 0, 0.4);
+    transition: all 25ms linear;
+    position: relative;
+
+}
+
+#numbers a:active {
+	top: 4px;
+  	box-shadow: 0px 2px 0px 0px rgba(100, 173, 175, 1),
+    0px 5px 6px 0px rgba(0, 0, 0, 0.4);
+}
+
+#numbers #clear {
+
+}
+
+#clearall {
+
+}
