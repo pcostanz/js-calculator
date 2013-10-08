@@ -1,84 +1,77 @@
 $(document).ready(function(){
-	var testNumLength = function(number) {
-        if (number.length > 9) {
-            totaldiv.text(number.substr(number.length-9,9));
-            if (number.length > 15) {
-                number = "";
-                totaldiv.text("Err");
-            }
-        } 
-    };
-	var number = "";
-    var newnumber = "";
-    var operator = "";
-    var totaldiv = $("#total");
-    totaldiv.text("0");
     
-    $("#numbers a").not("#clear,#clearall").click(function() {
-    
-        number += $(this).html();
-        totaldiv.text(number);
-        testNumLength(number);
-        console.log(number + " = number");
-    
+    // scope the screen object so we can access it within the click handler
+
+    var screen = $("#screen");
+    var screenReset = "0";
+    var evaluation = "";
+    var evalCache = {};
+    updateScreen(screenReset);
+
+    $("#equals").on("click", function(event) {
+        // wrap this in a try catch, sometimes you can press = in a dumb situation, let's not account for those individually
+        evaluation = eval(evaluation);
+        updateScreen(evaluation);
     });
 
-    $("#operators a").not("#equals").click(function() {
-    
-        operator = $(this).html();
-        newnumber = number;
-        number = "";
-        totaldiv.text("0");
-        console.log(operator + " = operator, " + newnumber + " = newnumber");
- 
-    }); 
-    
-    $("#clear,#clearall").click(function() {
-    
-        number = "";
-        totaldiv.text("0");
-        var thisid = $(this).attr("id");
-        if (thisid === "clearall") {
-            newnumber = "";
-            operator = "";
-            console.log(thisid + " clicked, resetting newnumber")
-        };
- 
-    }); 
+    $("#clearall").on("click", function(event) {
 
-    $("#equals").click(function() {
+        evaluation = "";
+        updateScreen(screenReset);
 
-        var answer;
-    
-        if (operator != "") {
-            number = parseInt(number, 10);
-            newnumber = parseInt(newnumber, 10);
-        };
+    });
 
-        switch(operator){
 
-            case "+":
-                answer = newnumber + number;
-                break;
-            case "-":
-                answer = newnumber - number;
-                break;
-            case "*":
-                answer = newnumber * number;
-                break;
-            case "/":
-                answer = newnumber / number;
-                break;
-            default:
-                console.log("no operator provided");
-        }
 
-        if (operator != "") {
-            totaldiv.text(answer);
-        };
+    $("#clickables a").not("#equals, #clearall").on("click", function(event) {
+        var clicked = $(this).text();
+        console.log("clickables clicked");
 
-        operator = "";
+        if (clicked === ".") {
+                var holder = evaluation.toString().split(/[\+\-\/\*]/);
+                var holderLength = holder.length-1;
+                var lastitem = holder[holderLength];
+                lastitemFl = parseFloat(lastitem);
 
-    });    
+                console.log(holder + " = holder\n " + lastitem + " = lastitem \n " + lastitemFl + " = float lastitem \n " + holderLength);
+
+                if (lastitemFl || lastitemFl === 0) { // this here to resolve a bug related to NaN populating lastitemFl when leading after an operator with a decimal - i think that this would be resolved by using a linear search to look for the . see code below
+
+                    // if (number.indexOf('.') > 0)
+                    //     {
+                    //       hasDecimal = true;
+                    //       console.log("hasDecimal = " + hasDecimal);
+                    //     }
+
+                    if (lastitemFl % 1 != 0 || lastitem.charAt(lastitem.length-1) === ".") { 
+                        console.log(lastitem + " = lastitem");
+                        return;
+                    }
+                }
+                else { evaluation += "0";}
+            }
+
+        evaluation += clicked;
+        updateScreen(evaluation);
+    });
+
+
+    function updateScreen (num) {
+        screen.text(num);
+        var number = num.toString();
+
+    }
+
+    function addToHistory (){
+
+    }
+
+    function checkDecimal (arg) {
+
+    }
+
+    function throwError (arg) {
+        // body...
+    }
 
 });
