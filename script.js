@@ -10,6 +10,7 @@ $(document).ready(function(){
 
     $("#equals").on("click", function(event) {
         // wrap this in a try catch, sometimes you can press = in a dumb situation, let's not account for those individually
+        // consider greying out the button when you shouldn't click it
         evaluation = eval(evaluation);
         updateScreen(evaluation);
     });
@@ -26,6 +27,7 @@ $(document).ready(function(){
     $("#clickables a").not("#equals, #clearall").on("click", function(event) {
         var clicked = $(this).text();
         console.log("clickables clicked");
+        // BUG - you can put as many operators in a row as you'd like. duh.
 
         if (clicked === ".") {
                 var holder = evaluation.toString().split(/[\+\-\/\*]/);
@@ -35,7 +37,7 @@ $(document).ready(function(){
 
                 console.log(holder + " = holder\n " + lastitem + " = lastitem \n " + lastitemFl + " = float lastitem \n " + holderLength);
 
-                if (lastitemFl || lastitemFl === 0) { // this here to resolve a bug related to NaN populating lastitemFl when leading after an operator with a decimal - i think that this would be resolved by using a linear search to look for the . see code below
+                if (lastitemFl || lastitemFl === 0) { // this here to resolve a bug related to NaN populating lastitemFl when leading after an operator with a decimal - i think that this would be resolved by using a linear search to look for the . the reason i'm adding this if statement is because the first item in the nested if statement triggers on NaN. see code below
 
                     // if (number.indexOf('.') > 0)
                     //     {
@@ -62,7 +64,7 @@ $(document).ready(function(){
 
     }
 
-    function addToHistory (){
+    function addToHistory (arg){
 
     }
 
